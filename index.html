@@ -93,6 +93,7 @@ details{border-left:4px solid var(--ac);box-shadow:0 1px 3px rgba(0,0,0,.06)}sum
 @media print{#wl,.idb{display:none!important}}
 .wb2{width:100%;margin-top:10px;padding:11px;border:2px solid #19376d;border-radius:12px;background:#fff;color:#19376d;font-weight:700;cursor:pointer;font-size:.95rem}
 .ng{color:#f5c431;font-weight:700;font-size:.78rem;letter-spacing:.05em;padding:14px 10px 4px;border-top:1px solid rgba(255,255,255,.18);margin-top:6px}.ng:first-child{border-top:0;margin-top:0}nav button{padding-left:18px}
+nav button.ng{width:100%;justify-content:flex-start;font-weight:700;font-size:.82rem;letter-spacing:.04em;color:#f5c431;background:rgba(255,255,255,.08);border:0;margin:8px 0 2px;padding:10px 12px}.gsub{display:flex;flex-direction:column;gap:3px;padding-left:6px}
 </style></head><body>
 <div id="wl"><div class="wc"><div class="wi">🎓</div><h1>MOMENTO III · 2026</h1><h2>Evaluación, sistematización y proyección</h2><p class="ws">Programa de Tutorías para el Aprendizaje y la Formación Integral · PTAFI 3.0</p><p>Bienvenido(a). Para ingresar, registre los datos de identificación del docente tutor y de la institución educativa.</p>
 <label>👩‍🏫 Nombre del tutor o tutores</label><input id="wt" placeholder="Nombre completo" autocomplete="off">
@@ -260,10 +261,10 @@ const rv='<button class="b g" onclick="this.nextElementSibling.hidden=!this.next
 const M=[{h:"Momento I – Reconocemos y diseñamos",c:"#ae3836",it:["🔎 Diagnóstico participativo","🌎 Lectura de contexto","🧩 Articulación curricular","📝 Diseño contextualizado del PFI EE"],q:"¿Cuál fue el propósito fundamental del Momento I?",a:"Conocer la realidad del establecimiento educativo → identificar necesidades → diseñar una respuesta contextualizada."},
 {h:"Momento II – Implementamos y profundizamos",c:"#c98a00",it:["▶️ Implementación de estrategias de formación integral","📊 Seguimiento centros de interés","🔗 Profundización de la formación integral","🧩 Armonización y articulación curricular","👥 Comunidades de aprendizaje"],q:"Si en el Momento I reconocimos y diseñamos, ¿qué hicimos principalmente en el Momento II?",a:"Implementamos, hicimos seguimiento y profundizamos las estrategias de formación integral."},
 {h:"Momento III – Evaluamos, sistematizamos y proyectamos",c:"#1b7a6b",it:["📊 Evaluar: ¿qué avances y resultados identificamos?","📝 Sistematizar: ¿qué aprendimos de la experiencia?","🔎 Analizar: ¿qué funcionó? ¿qué necesitamos fortalecer?","🚀 Proyectar: ¿qué decisiones y acciones continúan?"],q:"",a:""}];
-const c1=mk("cuando","¿Cuándo se desarrolla?","1. ¿Cuándo se desarrolla el Momento III?","Tiempo destinado para este momento.",
+const c1=mk("cuando","¿Cuándo se desarrolla?","¿Cuándo se desarrolla el Momento III?","Tiempo destinado para este momento.",
 `<div class="card"><div class="date">13 de octubre de 2026 → 15 de febrero de 2027</div><p><span class="lg st">Inicio: 13 oct 2026</span> <span class="lg en">Finalización: 15 feb 2027</span> <span class="lg rg">Periodo del Momento III</span></p><div class="zg" id="cal"></div></div>
 <div class="ex"><b>Tenga presente:</b> el Momento III incluye el inicio del año escolar 2027; las semanas de desarrollo institucional de diciembre y enero son espacio para el trabajo colaborativo y el uso pedagógico de resultados.</div>`);
-const c2=mk("venimos","¿De dónde venimos?","2. ¿De dónde venimos?","Breve recuento de los tres momentos del PTAFI 3.0.",
+const c2=mk("venimos","¿De dónde venimos?","¿De dónde venimos?","Breve recuento de los tres momentos del PTAFI 3.0.",
 M.map(m=>`<div class="card" style="border-top:5px solid ${m.c}"><h3 style="margin:0 0 6px;color:${m.c}">${m.h}</h3><ul>${m.it.map(x=>`<li>${x}</li>`).join("")}</ul>${m.q?`<p><b>${m.q}</b></p>${rv}<div class="ex" hidden>${m.a}</div>`:`<p><b>Esto es lo que vamos a recorrer a partir de aquí.</b></p>`}</div>`).join(""));
 (()=>{const A=new Date(2026,9,13),B=new Date(2027,1,15),MN=["Octubre","Noviembre","Diciembre","Enero","Febrero"],DN=["L","M","X","J","V","S","D"];
 $("cal").innerHTML=MN.map((m,k)=>{const y=k<3?2026:2027,mo=(9+k)%12,f=(new Date(y,mo,1).getDay()+6)%7,n=new Date(y,mo+1,0).getDate();let h=`<div class="cm"><b>${m} ${y}</b><div class="cg">`+DN.map(d=>`<i class="dn">${d}</i>`).join("")+"<i></i>".repeat(f);
@@ -279,10 +280,10 @@ cs.innerHTML=`<h2>Cronograma Momento III</h2><p class="intro noprint">Diligencie
 main.appendChild(cs);
 const eh=v=>String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
 let ST={},META={},CNT=0,ACT=0;const SS=[0,0,0,0],OPT={};
-try{ST=JSON.parse(sessionStorage.getItem("m3st")||"{}")}catch(e){}
+
 let CDB=null,CT=null;
 const cstat=t=>{const e=document.getElementById("cst");if(e)e.textContent=t};
-const pst=()=>{ST._at=Date.now();try{sessionStorage.setItem("m3st",JSON.stringify(ST))}catch(e){}try{localStorage.setItem("m3full",JSON.stringify({st:ST,id:ID}))}catch(e){}csave()};
+const pst=()=>{ST._at=Date.now();csave()};
 function csave(){clearTimeout(CT);CT=setTimeout(async()=>{if(!CDB){cstat("Guardado solo en este navegador.");return}try{await CDB.set({json:JSON.stringify({st:ST,id:ID,at:Date.now()})});cstat("💾 Guardado en su cuenta ✓ "+new Date().toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"}))}catch(e){cstat("No se pudo guardar en su cuenta; intente de nuevo.")}},700)}
 const vl=k=>{const v=ST[k];return(Array.isArray(v)?v.join("; "):v==null?"":String(v)).trim()};
 const reg=(k,l,ph)=>{META[k]=META[k]||{o:++CNT};META[k].l=l;META[k].ph=ph};
@@ -382,15 +383,15 @@ function wmun(){$("wo").hidden=$("wn").value!="__o"}
 function enter(){const t=$("wt").value.trim(),e=$("we2").value.trim(),c=$("wc").value.trim(),d=$("wd").value,mm=$("wn").value=="__o"?$("wo").value.trim():$("wn").value,er=[];
 if(!t)er.push("el nombre del docente tutor");if(!e)er.push("el nombre de la institución educativa");if(!c)er.push("el código DANE");else if(!/^\d+$/.test(c))er.push("un código DANE con solo números");if(!d)er.push("el departamento");if(!mm)er.push("el municipio");
 if(er.length){$("wer").textContent="Falta o debe corregir: "+er.join("; ")+".";$("wer").hidden=false;return}
-$("wer").hidden=true;ID={t,e,c,d,m:mm};try{sessionStorage.setItem("m3id",JSON.stringify(ID))}catch(x){}applyID()}
+$("wer").hidden=true;ID={t,e,c,d,m:mm};applyID()}
 function applyID(){const V={fT:ID.t,fE:ID.e,fD:ID.c,fDp:ID.d,fMn:ID.m,f1:ID.e,f2:ID.t,f3:ID.m+", "+ID.d};Object.keys(V).forEach(k=>{const i=$(k);i.value=V[k];if(!/^f[123]$/.test(k)&&k[0]=="f")i.readOnly=true});
 const h=`<b>${eh(ID.e)}</b> · DANE ${eh(ID.c)} · ${eh(ID.m)}, ${eh(ID.d)} · Tutor(es): ${eh(ID.t)}`;$("idb").innerHTML=`<span>🎓 ${h}</span><span id="cst" class="q"></span><button class="b g" onclick="pst()">Guardar ahora</button><button class="b g" onclick="chg()">Cambiar datos de identificación</button>`;$("phb").innerHTML="🏫 "+h;
 $("wl").hidden=true;$("app").hidden=false;save();pst();window.scrollTo(0,0)}
 function chg(){if(ID){$("wt").value=ID.t;$("we2").value=ID.e;$("wc").value=ID.c;$("wd").value=ID.d;wdep();if(MUN[ID.d]&&MUN[ID.d].includes(ID.m))$("wn").value=ID.m;else{$("wn").value="__o";$("wo").hidden=false;$("wo").value=ID.m}}$("wl").hidden=false;$("app").hidden=true;window.scrollTo(0,0)}
-try{const s=JSON.parse(sessionStorage.getItem("m3id")||"null");if(s){ID=s;chg();$("wl").hidden=false;$("app").hidden=true}}catch(x){}
+
 function bk(){if(!ID)return;dl("PTAFI_respaldo_"+ID.c+".json",JSON.stringify({v:1,id:ID,st:ST,cr:state(),at:Date.now()}));cstat("Respaldo descargado. Guárdelo en un lugar seguro (correo, Drive o su equipo).")}
 function rst(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o.st!=="object"||!o.id)throw 0;ST=o.st;ID=o.id;if(o.cr)apply(o.cr);pst();chg();rend(ACT);$("wer").hidden=true;$("wrec").textContent="✔ Se cargó su respaldo. Verifique sus datos y pulse ENTRAR para continuar.";$("wrec").hidden=false}catch(x){$("wer").textContent="El archivo no es un respaldo válido de esta plataforma.";$("wer").hidden=false}};r.readAsText(f);e.target.value=""}
-try{const L=JSON.parse(localStorage.getItem("m3full")||"null");if(L&&L.st&&!Object.keys(ST).length){ST=L.st;rend(ACT)}if(L&&L.id&&!ID){ID=L.id;chg()}}catch(x){}
+
 (async()=>{try{const c=window.claude&&await claude.use("db"),u=await claude.use("user");if(!c||!u)return;const uid=await u.id();if(!uid)return;CDB=c.collection("data/users/"+uid).doc("m3full");const sn=await CDB.get();
 if(sn.exists&&$("app").hidden){const raw=typeof sn.data==="function"?sn.data():sn.data,o=JSON.parse(raw.json);if(o&&o.st&&Object.keys(o.st).length){ST=o.st;if(o.id){ID=o.id;chg()}rend(ACT);$("wrec").textContent="✔ Se recuperó su trabajo guardado"+(o.at?" el "+new Date(o.at).toLocaleString("es-CO"):"")+". Verifique sus datos y pulse ENTRAR para continuar.";$("wrec").hidden=false}}else if(!sn.exists&&Object.keys(ST).length)csave();
 cstat("Guardado automático en su cuenta activado.")}catch(e){}})();
@@ -412,7 +413,7 @@ if(r){if(r.id&&!same(r.id.t,$("wt").value)){wmsg("Ese DANE y PIN ya pertenecen a
 if(!Object.keys(ST).length||(r.st&&(r.st._at||0)>(ST._at||0))){ST=r.st||{};if(r.cr)apply(r.cr);rend(ACT)}}
 enter0()}catch(e){wmsg("No hay conexión con el servidor de guardado. Revise su internet e intente de nuevo.",1)}};
 async function recov(){try{if(!(await keys()))return;const r=await getRec();if(!r){wmsg("No se encontró trabajo guardado con ese DANE y PIN.",1);return}
-ST=r.st||{};ID=r.id;if(r.cr)apply(r.cr);try{localStorage.setItem("m3full",JSON.stringify({st:ST,id:ID}))}catch(e){}chg();rend(ACT);wmsg("✔ Se recuperó su trabajo guardado. Verifique sus datos y pulse ENTRAR.")}catch(e){wmsg("No fue posible recuperar: revise su DANE, su PIN y su conexión.",1)}}
+ST=r.st||{};ID=r.id;if(r.cr)apply(r.cr);chg();rend(ACT);wmsg("✔ Se recuperó su trabajo guardado. Verifique sus datos y pulse ENTRAR.")}catch(e){wmsg("No fue posible recuperar: revise su DANE, su PIN y su conexión.",1)}}
 csave=function(){clearTimeout(CT);CT=setTimeout(async()=>{if(!RK){cstat("Guardado solo en este navegador.");return}try{const t=await enc(JSON.stringify({st:ST,id:ID,cr:state(),at:Date.now()})),r=await fetch("/api/m3?id="+RK.id,{method:"PUT",body:t});if(!r.ok)throw 0;cstat("💾 Guardado en el servidor (cifrado) ✓ "+new Date().toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"}))}catch(e){cstat("No se pudo guardar en el servidor; intente de nuevo.")}},700)};
 const _sv0=save;save=function(){_sv0();if(RK)csave()};
 
@@ -434,11 +435,11 @@ let R=[],DB=null,T=null;
 function msg(t){const m=document.getElementById("msg");if(m)m.textContent=t}
 function state(){return{rows:R,f:["f1","f2","f3"].map(k=>document.getElementById(k).value)}}
 function apply(d){R=d.rows||[];(d.f||[]).forEach((v,i)=>document.getElementById("f"+(i+1)).value=v||"");draw()}
-try{apply(JSON.parse(localStorage.getItem("m3")||"{}"))}catch(e){}
+
 (async()=>{try{const c=window.claude&&await claude.use("db"),u=await claude.use("user");if(!c||!u)return;const id=await u.id();if(!id)return;
 DB=c.collection("data/users/"+id).doc("momento3");const sn=await DB.get();if(sn.exists){const d=typeof sn.data==="function"?sn.data():sn.data;if(d&&d.json)apply(JSON.parse(d.json))}msg("Guardado automático activado en su cuenta.")}catch(e){}})();
 function draw(){document.getElementById("tb").innerHTML=R.map(row).join("")||'<tr><td colspan="9">Sin actividades. Agregue una o cargue la plantilla.</td></tr>'}
-function save(){clearTimeout(T);T=setTimeout(async()=>{const j=JSON.stringify(state());try{localStorage.setItem("m3",j)}catch(e){}
+function save(){clearTimeout(T);T=setTimeout(async()=>{const j=JSON.stringify(state());
 if(DB){try{await DB.set({json:j});msg("Guardado ✓")}catch(e){msg("No se pudo guardar automáticamente.")}}},600)}
 async function dl(name,data){try{const d=await claude.use("downloads");if(!d)throw 0;await d.save({filename:name,data});msg("Archivo listo ✓")}catch(e){if(e&&e.code=="declined")return;
 try{const a=document.createElement("a");a.href=URL.createObjectURL(data instanceof Blob?data:new Blob([data]));a.download=name;a.click()}catch(x){msg("No fue posible descargar en esta vista.")}}}
@@ -450,13 +451,26 @@ function del(i){R.splice(i,1);draw();save()}
 function clr(){if(confirm("¿Borrar todo el cronograma?")){R=[];draw();save()}}
 function preload(){const p=[["Taller de apropiación de Lineamientos con docentes","Apropiar","Tutor/a y docentes"],["Círculos de conversación con estudiantes","Evaluar","Tutor/a"],["Encuentro con familias","Evaluar","Tutor/a y directivos"],["Escritura de narrativas pedagógicas y sistematización (PFIEE)","Sistematizar","Docentes"],["Muestra integradora de cierre","Sistematizar","Estudiantes, tutor/a, practicantes"],["Mesas de uso pedagógico de resultados (semanas de desarrollo institucional)","Proyectar","Equipos docentes"],["Formalización de acuerdos en PEI, SIEE y plan de estudios","Proyectar","Directivos"],["Narrativa de práctica reflexiva del tutor/a","Sistematizar","Tutor/a"]];
 p.forEach(x=>R.push({a:x[0],f:x[1],r:x[2],d1:"",d2:"",s:"Pendiente",o:""}));draw();save()}
-function pdf(){try{const J=window.jspdf.jsPDF,d=new J({orientation:"landscape"});const f=state().f;
-d.setFillColor(174,56,54);d.rect(0,0,279,26,"F");d.setTextColor(255,255,255);d.setFont("helvetica","bold");d.setFontSize(14);d.text(String($("fE").value||f[0]).toUpperCase(),139.5,10,{align:"center"});d.setFontSize(9);d.text("Cronograma Momento III · PTAFI 3.0",139.5,16,{align:"center"});d.setFont("helvetica","normal");d.text("DANE: "+$("fD").value+" · "+$("fMn").value+", "+$("fDp").value+" · Tutor(es): "+($("fT").value||f[1]),139.5,22,{align:"center"});d.setTextColor(30,30,30);
-d.autoTable({startY:32,head:[["#","Actividad","Fase","Responsable","Inicio","Fin","Estado","Observaciones"]],body:R.map((r,i)=>[i+1,r.a,r.f,r.r,r.d1,r.d2,r.s,r.o]),styles:{fontSize:8},headStyles:{fillColor:[174,56,54]}});
-d.setFontSize(8);d.text("Elaborado con el instrumento de Leonardo Orozco · Tutor del Atlántico",14,200);
-dl("cronograma_momento3.pdf",d.output("blob"))}catch(e){document.body.classList.add("pc");window.print()}}
+function pdf(){const EE=($("fE").value||"").trim(),DN=($("fD").value||"").trim(),TU=($("fT").value||"").trim(),MN=($("fMn").value||"").trim(),DP=($("fDp").value||"").trim();
+if(!EE||!DN||!TU){msg("Para exportar el PDF debe haber ingresado la institución, el código DANE y el tutor.");return}
+try{const d=new window.jspdf.jsPDF({orientation:"landscape",unit:"mm",format:"letter"}),W=279,fm=v=>v?v.split("-").reverse().join("/"):"—",hoy=new Date().toLocaleDateString("es-CO",{day:"numeric",month:"long",year:"numeric"}),nz=d.splitTextToSize(cl(EE.toUpperCase()),250).slice(0,2),o=nz.length>1?7:0,H=31+o;
+const bn=()=>{d.setFillColor(174,56,54);d.rect(0,0,W,H,"F");d.setTextColor(255,255,255);d.setFont("helvetica","bold");d.setFontSize(16);d.text(nz,W/2,10.5,{align:"center"});d.setFontSize(10.5);d.text("CRONOGRAMA · MOMENTO III 2026 · PTAFI 3.0",W/2,18+o,{align:"center"});d.setFont("helvetica","normal");d.setFontSize(8.5);d.text(cl("Código DANE: "+DN+"  ·  "+MN+", "+DP),W/2,23.5+o,{align:"center"});d.text(cl("Tutor(es): "+TU).slice(0,150),W/2,28+o,{align:"center"})};
+let y=H+10;const tx=(t,sz,b,col,gap)=>{d.setFont("helvetica",b?"bold":"normal");d.setFontSize(sz);d.setTextColor(col[0],col[1],col[2]);d.splitTextToSize(cl(t),255).forEach(s=>{d.text(s,12,y);y+=sz*.42+1.4});y+=gap||0};
+const rs=R.filter(r=>(r.a||"").trim()),cf=FA.map(f=>rs.filter(r=>r.f==f).length),ce=ES.map(e=>rs.filter(r=>r.s==e).length),ds=rs.map(r=>r.d1).filter(Boolean).sort(),de=rs.map(r=>r.d2).filter(Boolean).sort();
+bn();tx("INTRODUCCIÓN",12,1,[174,56,54],1);
+tx("El presente cronograma fue elaborado por "+TU+", docente(s) tutor(es) del Programa de Tutorías para el Aprendizaje y la Formación Integral (PTAFI 3.0), para el establecimiento educativo "+EE+" (código DANE "+DN+"), ubicado en "+MN+", "+DP+". Organiza en el tiempo las acciones que el establecimiento prevé desarrollar durante el Momento III de 2026, dedicado a la evaluación, sistematización y proyección de los aprendizajes y avances alcanzados, que se extiende del 13 de octubre de 2026 al 15 de febrero de 2027.",10,0,[30,30,30],2.5);
+tx("El Momento III se organiza en cuatro fases articuladas: Apropiar (comprender para transformar), Evaluar (lectura colectiva del año), Sistematizar (de la experiencia al conocimiento pedagógico compartible) y Proyectar (construir una visión compartida sobre las transformaciones que se requieren). Cada actividad de este cronograma se asocia a una de esas fases, de modo que el documento permite ver cómo se distribuye el trabajo del establecimiento a lo largo del periodo.",10,0,[30,30,30],2.5);
+tx("Cómo leer este documento: la tabla de las páginas siguientes presenta, para cada actividad, la fase a la que corresponde, la persona o equipo responsable, las fechas de inicio y fin, su estado y las observaciones registradas por el establecimiento. Los datos reproducen lo consignado por el equipo; las fechas y los responsables los define el establecimiento educativo, y este cronograma es un instrumento de planeación y seguimiento que puede actualizarse.",10,0,[30,30,30],4);
+tx("RESUMEN DEL CRONOGRAMA",12,1,[174,56,54],1);
+tx("Actividades registradas: "+rs.length,10,0,[30,30,30],0);
+if(rs.length){tx("Por fase: "+FA.map((f,i)=>f+" "+cf[i]).join("  ·  "),10,0,[30,30,30],0);tx("Por estado: "+ES.map((e,i)=>e+" "+ce[i]).join("  ·  "),10,0,[30,30,30],0);if(ds.length)tx("Primera fecha de inicio registrada: "+fm(ds[0]),10,0,[30,30,30],0);if(de.length)tx("Última fecha de finalización registrada: "+fm(de[de.length-1]),10,0,[30,30,30],0)}else tx("Aún no se han registrado actividades en el cronograma.",10,0,[30,30,30],0);
+tx("Documento generado el "+hoy+".",9,0,[110,110,110],0);
+if(rs.length){d.addPage();d.setTextColor(174,56,54);d.setFont("helvetica","bold");d.setFontSize(12);d.text("DETALLE DE ACTIVIDADES",12,H+8);
+d.autoTable({startY:H+12,margin:{top:H+12,left:12,right:12,bottom:16},head:[["#","Actividad","Fase","Responsable","Inicio","Fin","Estado","Observaciones"]],body:rs.map((r,i)=>[i+1,cl(r.a),r.f,cl(r.r||""),fm(r.d1),fm(r.d2),r.s,cl(r.o||"")]),styles:{fontSize:8.5,cellPadding:2,overflow:"linebreak",valign:"top"},headStyles:{fillColor:[174,56,54],textColor:255},columnStyles:{0:{cellWidth:7},1:{cellWidth:66},2:{cellWidth:24},3:{cellWidth:36},4:{cellWidth:20},5:{cellWidth:20},6:{cellWidth:22},7:{cellWidth:60}},didDrawPage:()=>bn()})}
+const N=d.getNumberOfPages();for(let i=1;i<=N;i++){d.setPage(i);d.setFont("helvetica","normal");d.setFontSize(8);d.setTextColor(110,110,110);d.text("Pág. "+i+" de "+N+"  ·  Instrumento elaborado por Leonardo Orozco, tutor del Atlántico",12,210)}
+dl("PTAFI_Cronograma_Momento3.pdf",d.output("blob"));msg("PDF generado. Si no se descarga, revise los permisos del navegador.")}catch(x){msg("No fue posible generar el PDF en esta vista.")}}
 document.addEventListener("input",e=>{const k=e.target.dataset&&e.target.dataset.k;if(k){const i=e.target.closest("tr").rowIndex-1;R[i][k]=e.target.value;save()}else if(/^f[123]$/.test(e.target.id))save()});
-function show(id){if(id=="seg")seg();document.querySelectorAll(".sec").forEach(s=>s.hidden=s.id!=id);document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.id==id));document.getElementById("nav").classList.remove("open");scrollTo(0,0)}
-S.forEach((s,i)=>{const b=document.createElement("button");b.innerHTML=`<span class="n">${i+1}</span>${s.n}`;b.dataset.id=s.id;b.onclick=()=>show(s.id);if(i==0||s.id=="fases"){const g=document.createElement("div");g.className="ng";g.textContent=i==0?"SESIÓN 1 · MOMENTO III-2026":"SESIÓN 2";nav.appendChild(g)}nav.appendChild(b)});
+function show(id){if(id=="seg")seg();{const bb=document.querySelector('nav button[data-id="'+id+'"]'),gc=bb&&bb.closest(".gsub");if(gc&&gc.hidden){gc.hidden=false;gc.h.textContent="▾ "+gc.t}}document.querySelectorAll(".sec").forEach(s=>s.hidden=s.id!=id);document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.id==id));document.getElementById("nav").classList.remove("open");scrollTo(0,0)}
+let GC=null;S.forEach((s,i)=>{if(i==0||s.id=="fases"){const t=i==0?"SESIÓN 1 · MOMENTO III-2026":"SESIÓN 2",h=document.createElement("button"),c=document.createElement("div");c.className="gsub";c.hidden=i!=0;c.h=h;c.t=t;h.className="ng";h.textContent=(c.hidden?"▸ ":"▾ ")+t;h.onclick=()=>{c.hidden=!c.hidden;h.textContent=(c.hidden?"▸ ":"▾ ")+t};nav.appendChild(h);nav.appendChild(c);GC=c}const b=document.createElement("button");b.textContent=s.n;b.dataset.id=s.id;b.onclick=()=>show(s.id);GC.appendChild(b)});
 draw();show("cuando");
 </script></body></html>
