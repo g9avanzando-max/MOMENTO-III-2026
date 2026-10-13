@@ -102,7 +102,7 @@ nav button.ng{justify-content:center;text-align:center}
 <label>🔢 Código DANE</label><input id="wc" inputmode="numeric" maxlength="12" placeholder="Solo números (se conservan los ceros iniciales)" autocomplete="off">
 <label>🔐 PIN personal (no lo olvide)</label><input id="wpin" type="password" maxlength="40" placeholder="Mínimo 6 caracteres; use uno que solo usted conozca" autocomplete="off"><label>📍 Departamento</label><select id="wd" onchange="wdep()"></select>
 <label>🏘️ Municipio</label><select id="wn" onchange="wmun()"><option value="">Primero elija el departamento</option></select><input id="wo" hidden placeholder="Escriba el municipio">
-<p id="wrec" class="werr" hidden style="background:#e6f6ea;color:#14532d"></p><p id="wer" class="werr" hidden></p><button class="wb" onclick="enter()">ENTRAR</button><button class="wb2" onclick="salir()">🧹 Limpiar campos</button><button class="wb2" onclick="recov()">🔄 Recuperar mi trabajo (solo DANE + PIN)</button><p class="wf">Pantalla de identificación, no es un inicio de sesión con contraseña.</p><p class="wf">¿Ya trabajó antes, incluso desde otro equipo? Escriba su DANE y su PIN y pulse «Recuperar mi trabajo». Su avance se guarda cifrado: nadie más puede leerlo.</p><p class="wf"><b>Tutor Leonardo Orozco · Atlántico</b></p><p class="wf">Versión del 12/10/2026 · aislamiento por docente</p></div></div>
+<p id="wrec" class="werr" hidden style="background:#e6f6ea;color:#14532d"></p><p id="wer" class="werr" hidden></p><button class="wb" onclick="enter()">ENTRAR</button><button class="wb2" onclick="salir()">🧹 Limpiar campos</button><button class="wb2" onclick="recov()">🔄 Recuperar mi trabajo (solo DANE + PIN)</button><p class="wf">Pantalla de identificación, no es un inicio de sesión con contraseña.</p><p class="wf">¿Ya trabajó antes, incluso desde otro equipo? Escriba su DANE y su PIN y pulse «Recuperar mi trabajo». Su avance se guarda cifrado: nadie más puede leerlo.</p><p class="wf"><b>Tutor Leonardo Orozco · Atlántico</b></p><p class="wf">Versión del 12/10/2026 · aislamiento por docente</p><p class="wf" id="cnt0" style="font-weight:600"></p></div></div>
 <div id="app" hidden>
 <header><h1>Guía Integral <b>Momento III</b> · PTAFI 3.0</h1>
 <p>Evaluación, sistematización y proyección</p></header>
@@ -111,7 +111,7 @@ nav button.ng{justify-content:center;text-align:center}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <button class="mt" onclick="document.getElementById('nav').classList.toggle('open')">☰ Menú de contenidos</button><div class="lay"><nav id="nav"></nav><main id="main"></main></div>
 <footer>Instrumento elaborado a partir de la Guía Integral Momento III (MEN, 2026).<br>
-Crédito: <b>Leonardo Orozco</b> · Docente tutor del Atlántico</footer>
+Crédito: <b>Leonardo Orozco</b> · Docente tutor del Atlántico<br><span id="cnt1"></span></footer>
 </div>
 <script>
 const S=[
@@ -409,18 +409,23 @@ async function keys(){const d=$("wc").value.trim(),p=$("wpin").value;if(!/^\d+$/
 function wmsg(t,bad){const e=$("wer");e.textContent=t;e.hidden=!t;const g=$("wrec");if(!bad&&t){g.textContent=t;g.hidden=false;e.hidden=true}else g.hidden=true}
 const same=(a,b)=>String(a||"").trim().toLowerCase()==String(b||"").trim().toLowerCase();
 const enter0=enter;
-let CURID=null;
+let CURID=null,NEWREC=false;
 function wipe(){ST={};R=[];["f1","f2","f3"].forEach(k=>{const e=$(k);if(e)e.value=""});SS[0]=SS[1]=SS[2]=SS[3]=0;ACT=0;draw()}
 enter=async function(){try{if(!(await keys()))return;const r=await getRec();
 if(r&&r.id&&!same(r.id.t,$("wt").value)){wmsg("Ese DANE y PIN ya pertenecen a otro tutor ("+r.id.t+"). Elija un PIN distinto.",1);RK=null;return}
-if(RK.id!==CURID){wipe();if(r){ST=r.st||{};apply(r.cr||{rows:[],f:[]})}CURID=RK.id}
+if(RK.id!==CURID){NEWREC=!r;wipe();if(r){ST=r.st||{};apply(r.cr||{rows:[],f:[]})}CURID=RK.id}
 fp(0);enter0()}catch(e){wmsg("No hay conexión con el servidor de guardado. Revise su internet e intente de nuevo.",1)}};
 async function flush(){clearTimeout(CT);if(!RK||!ID)return;try{await fetch("/api/m3?id="+RK.id,{method:"PUT",body:await enc(JSON.stringify({st:ST,id:ID,cr:state(),at:Date.now()}))})}catch(e){}}
 async function salir(){await flush();wipe();RK=null;CURID=null;ID=null;["wt","we2","wc","wpin","wo"].forEach(k=>$(k).value="");$("wd").value="";wdep();["fT","fE","fD","fDp","fMn"].forEach(k=>{const e=$(k);e.value="";e.readOnly=false});$("wer").hidden=true;$("wrec").hidden=true;$("idb").innerHTML="";$("phb").innerHTML="";fp(0);$("wl").hidden=false;$("app").hidden=true;window.scrollTo(0,0)}
 async function recov(){try{if(!(await keys()))return;const r=await getRec();if(!r){wmsg("No se encontró trabajo guardado con ese DANE y PIN.",1);return}
-wipe();ST=r.st||{};ID=r.id;apply(r.cr||{rows:[],f:[]});CURID=RK.id;chg();rend(ACT);wmsg("✔ Se recuperó su trabajo guardado. Verifique sus datos y pulse ENTRAR.")}catch(e){wmsg("No fue posible recuperar: revise su DANE, su PIN y su conexión.",1)}}
-csave=function(){clearTimeout(CT);CT=setTimeout(async()=>{if(!RK){cstat("Guardado solo en este navegador.");return}try{const t=await enc(JSON.stringify({st:ST,id:ID,cr:state(),at:Date.now()})),r=await fetch("/api/m3?id="+RK.id,{method:"PUT",body:t});if(!r.ok)throw 0;cstat("💾 Guardado en el servidor (cifrado) ✓ "+new Date().toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"}))}catch(e){cstat("No se pudo guardar en el servidor; intente de nuevo.")}},700)};
+wipe();ST=r.st||{};ID=r.id;apply(r.cr||{rows:[],f:[]});CURID=RK.id;NEWREC=false;chg();rend(ACT);wmsg("✔ Se recuperó su trabajo guardado. Verifique sus datos y pulse ENTRAR.")}catch(e){wmsg("No fue posible recuperar: revise su DANE, su PIN y su conexión.",1)}}
+csave=function(){clearTimeout(CT);CT=setTimeout(async()=>{if(!RK){cstat("Guardado solo en este navegador.");return}try{const t=await enc(JSON.stringify({st:ST,id:ID,cr:state(),at:Date.now()})),r=await fetch("/api/m3?id="+RK.id,{method:"PUT",body:t});if(!r.ok)throw 0;if(NEWREC){NEWREC=false;cnt("docente")}cstat("💾 Guardado en el servidor (cifrado) ✓ "+new Date().toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"}))}catch(e){cstat("No se pudo guardar en el servidor; intente de nuevo.")}},700)};
 const _sv0=save;save=function(){_sv0();if(RK)csave()};
+function cnt(e){try{return fetch("/api/visitas?e="+e,{method:"POST",keepalive:true}).catch(()=>{})}catch(x){}}
+async function loadCount(){try{const r=await fetch("/api/visitas?public=1",{cache:"no-store"});if(!r.ok)return;const d=await r.json(),t="👁 "+d.visita+" visitas · 👩‍🏫 "+d.docente+" docentes participantes · 📄 "+d.pdf+" informes PDF";["cnt0","cnt1"].forEach(i=>{const e=$(i);if(e)e.textContent=t})}catch(x){}}
+try{if(!sessionStorage.getItem("m3v")){sessionStorage.setItem("m3v","1");Promise.resolve(cnt("visita")).then(loadCount)}else loadCount()}catch(x){Promise.resolve(cnt("visita")).then(loadCount)}
+const _ap=applyID;applyID=function(){_ap();Promise.resolve(cnt("ingreso")).then(loadCount)};
+const _dl=dl;dl=async function(n,d){const r=await _dl(n,d);if(/\.pdf$/i.test(n))Promise.resolve(cnt("pdf")).then(loadCount);return r};
 
 
 
