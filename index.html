@@ -95,6 +95,7 @@ details{border-left:4px solid var(--ac);box-shadow:0 1px 3px rgba(0,0,0,.06)}sum
 .ng{color:#f5c431;font-weight:700;font-size:.78rem;letter-spacing:.05em;padding:14px 10px 4px;border-top:1px solid rgba(255,255,255,.18);margin-top:6px}.ng:first-child{border-top:0;margin-top:0}nav button{padding-left:18px}
 nav button.ng{width:100%;justify-content:flex-start;font-weight:700;font-size:.82rem;letter-spacing:.04em;color:#f5c431;background:rgba(255,255,255,.08);border:0;margin:8px 0 2px;padding:10px 12px}.gsub{display:flex;flex-direction:column;gap:3px;padding-left:6px}
 nav button.ng{justify-content:center;text-align:center}
+.bv{text-align:center;color:#fff;padding:6px 8px 10px;font-size:.9rem;border-bottom:1px solid rgba(255,255,255,.18);margin-bottom:6px}.bv b{display:block;color:#f5c431;font-size:1rem}.vis{margin-top:14px;padding:10px 6px;border-top:1px solid rgba(255,255,255,.18);text-align:center;color:#f7e9e6;font-size:.88rem}.vis small{display:block;opacity:.85;margin-top:3px}
 </style></head><body>
 <div id="wl"><div class="wc"><div class="wi">🎓</div><h1>MOMENTO III · 2026</h1><h2>Evaluación, sistematización y proyección</h2><p class="ws">Programa de Tutorías para el Aprendizaje y la Formación Integral · PTAFI 3.0</p><p>Bienvenido(a). Para ingresar, registre los datos de identificación del docente tutor y de la institución educativa.</p>
 <label>👩‍🏫 Nombre del tutor o tutores</label><input id="wt" placeholder="Nombre completo" autocomplete="off">
@@ -102,7 +103,7 @@ nav button.ng{justify-content:center;text-align:center}
 <label>🔢 Código DANE</label><input id="wc" inputmode="numeric" maxlength="12" placeholder="Solo números (se conservan los ceros iniciales)" autocomplete="off">
 <label>🔐 PIN personal (no lo olvide)</label><input id="wpin" type="password" maxlength="40" placeholder="Mínimo 6 caracteres; use uno que solo usted conozca" autocomplete="off"><label>📍 Departamento</label><select id="wd" onchange="wdep()"></select>
 <label>🏘️ Municipio</label><select id="wn" onchange="wmun()"><option value="">Primero elija el departamento</option></select><input id="wo" hidden placeholder="Escriba el municipio">
-<p id="wrec" class="werr" hidden style="background:#e6f6ea;color:#14532d"></p><p id="wer" class="werr" hidden></p><button class="wb" onclick="enter()">ENTRAR</button><button class="wb2" onclick="salir()">🧹 Limpiar campos</button><button class="wb2" onclick="recov()">🔄 Recuperar mi trabajo (solo DANE + PIN)</button><p class="wf">Pantalla de identificación, no es un inicio de sesión con contraseña.</p><p class="wf">¿Ya trabajó antes, incluso desde otro equipo? Escriba su DANE y su PIN y pulse «Recuperar mi trabajo». Su avance se guarda cifrado: nadie más puede leerlo.</p><p class="wf"><b>Tutor Leonardo Orozco · Atlántico</b></p><p class="wf">Versión del 12/10/2026 · aislamiento por docente</p><p class="wf" id="cnt0" style="font-weight:600"></p></div></div>
+<p id="wrec" class="werr" hidden style="background:#e6f6ea;color:#14532d"></p><p id="wer" class="werr" hidden></p><button class="wb" onclick="enter()">ENTRAR</button><button class="wb2" onclick="salir()">🧹 Limpiar campos</button><button class="wb2" onclick="recov()">🔄 Recuperar mi trabajo (solo DANE + PIN)</button><p class="wf">Pantalla de identificación, no es un inicio de sesión con contraseña.</p><p class="wf">¿Ya trabajó antes, incluso desde otro equipo? Escriba su DANE y su PIN y pulse «Recuperar mi trabajo». Su avance se guarda cifrado: nadie más puede leerlo.</p><p class="wf"><b>Tutor Leonardo Orozco · Atlántico</b></p><p class="wf">Versión del 12/10/2026 · aislamiento por docente</p></div></div>
 <div id="app" hidden>
 <header><h1>Guía Integral <b>Momento III</b> · PTAFI 3.0</h1>
 <p>Evaluación, sistematización y proyección</p></header>
@@ -111,7 +112,7 @@ nav button.ng{justify-content:center;text-align:center}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <button class="mt" onclick="document.getElementById('nav').classList.toggle('open')">☰ Menú de contenidos</button><div class="lay"><nav id="nav"></nav><main id="main"></main></div>
 <footer>Instrumento elaborado a partir de la Guía Integral Momento III (MEN, 2026).<br>
-Crédito: <b>Leonardo Orozco</b> · Docente tutor del Atlántico<br><span id="cnt1"></span></footer>
+Crédito: <b>Leonardo Orozco</b> · Docente tutor del Atlántico</footer>
 </div>
 <script>
 const S=[
@@ -385,7 +386,7 @@ function enter(){const t=$("wt").value.trim(),e=$("we2").value.trim(),c=$("wc").
 if(!t)er.push("el nombre del docente tutor");if(!e)er.push("el nombre de la institución educativa");if(!c)er.push("el código DANE");else if(!/^\d+$/.test(c))er.push("un código DANE con solo números");if(!d)er.push("el departamento");if(!mm)er.push("el municipio");
 if(er.length){$("wer").textContent="Falta o debe corregir: "+er.join("; ")+".";$("wer").hidden=false;return}
 $("wer").hidden=true;ID={t,e,c,d,m:mm};applyID()}
-function applyID(){const V={fT:ID.t,fE:ID.e,fD:ID.c,fDp:ID.d,fMn:ID.m,f1:ID.e,f2:ID.t,f3:ID.m+", "+ID.d};Object.keys(V).forEach(k=>{const i=$(k);i.value=V[k];if(!/^f[123]$/.test(k)&&k[0]=="f")i.readOnly=true});
+function applyID(){$("bv").innerHTML="Bienvenido(a)<b>"+eh(ID.t)+"</b>";const V={fT:ID.t,fE:ID.e,fD:ID.c,fDp:ID.d,fMn:ID.m,f1:ID.e,f2:ID.t,f3:ID.m+", "+ID.d};Object.keys(V).forEach(k=>{const i=$(k);i.value=V[k];if(!/^f[123]$/.test(k)&&k[0]=="f")i.readOnly=true});
 const h=`<b>${eh(ID.e)}</b> · DANE ${eh(ID.c)} · ${eh(ID.m)}, ${eh(ID.d)} · Tutor(es): ${eh(ID.t)}`;$("idb").innerHTML=`<span>🎓 ${h}</span><span id="cst" class="q"></span><button class="b g" onclick="pst()">Guardar ahora</button><button class="b g" onclick="salir()">Cerrar sesión</button><button class="b g" onclick="chg()">Cambiar datos de identificación</button>`;$("phb").innerHTML="🏫 "+h;
 $("wl").hidden=true;$("app").hidden=false;save();pst();window.scrollTo(0,0)}
 function chg(){if(ID){$("wt").value=ID.t;$("we2").value=ID.e;$("wc").value=ID.c;$("wd").value=ID.d;wdep();if(MUN[ID.d]&&MUN[ID.d].includes(ID.m))$("wn").value=ID.m;else{$("wn").value="__o";$("wo").hidden=false;$("wo").value=ID.m}}$("wl").hidden=false;$("app").hidden=true;window.scrollTo(0,0)}
@@ -416,14 +417,16 @@ if(r&&r.id&&!same(r.id.t,$("wt").value)){wmsg("Ese DANE y PIN ya pertenecen a ot
 if(RK.id!==CURID){NEWREC=!r;wipe();if(r){ST=r.st||{};apply(r.cr||{rows:[],f:[]})}CURID=RK.id}
 fp(0);enter0()}catch(e){wmsg("No hay conexión con el servidor de guardado. Revise su internet e intente de nuevo.",1)}};
 async function flush(){clearTimeout(CT);if(!RK||!ID)return;try{await fetch("/api/m3?id="+RK.id,{method:"PUT",body:await enc(JSON.stringify({st:ST,id:ID,cr:state(),at:Date.now()}))})}catch(e){}}
-async function salir(){await flush();wipe();RK=null;CURID=null;ID=null;["wt","we2","wc","wpin","wo"].forEach(k=>$(k).value="");$("wd").value="";wdep();["fT","fE","fD","fDp","fMn"].forEach(k=>{const e=$(k);e.value="";e.readOnly=false});$("wer").hidden=true;$("wrec").hidden=true;$("idb").innerHTML="";$("phb").innerHTML="";fp(0);$("wl").hidden=false;$("app").hidden=true;window.scrollTo(0,0)}
+async function salir(){await flush();wipe();RK=null;CURID=null;ID=null;["wt","we2","wc","wpin","wo"].forEach(k=>$(k).value="");$("wd").value="";wdep();["fT","fE","fD","fDp","fMn"].forEach(k=>{const e=$(k);e.value="";e.readOnly=false});$("wer").hidden=true;$("wrec").hidden=true;$("idb").innerHTML="";$("phb").innerHTML="";$("bv").innerHTML="";fp(0);$("wl").hidden=false;$("app").hidden=true;window.scrollTo(0,0)}
 async function recov(){try{if(!(await keys()))return;const r=await getRec();if(!r){wmsg("No se encontró trabajo guardado con ese DANE y PIN.",1);return}
 wipe();ST=r.st||{};ID=r.id;apply(r.cr||{rows:[],f:[]});CURID=RK.id;NEWREC=false;chg();rend(ACT);wmsg("✔ Se recuperó su trabajo guardado. Verifique sus datos y pulse ENTRAR.")}catch(e){wmsg("No fue posible recuperar: revise su DANE, su PIN y su conexión.",1)}}
 csave=function(){clearTimeout(CT);CT=setTimeout(async()=>{if(!RK){cstat("Guardado solo en este navegador.");return}try{const t=await enc(JSON.stringify({st:ST,id:ID,cr:state(),at:Date.now()})),r=await fetch("/api/m3?id="+RK.id,{method:"PUT",body:t});if(!r.ok)throw 0;if(NEWREC){NEWREC=false;cnt("docente")}cstat("💾 Guardado en el servidor (cifrado) ✓ "+new Date().toLocaleTimeString("es-CO",{hour:"2-digit",minute:"2-digit"}))}catch(e){cstat("No se pudo guardar en el servidor; intente de nuevo.")}},700)};
 const _sv0=save;save=function(){_sv0();if(RK)csave()};
 function cnt(e){try{return fetch("/api/visitas?e="+e,{method:"POST",keepalive:true}).catch(()=>{})}catch(x){}}
-async function loadCount(){try{const r=await fetch("/api/visitas?public=1",{cache:"no-store"});if(!r.ok)return;const d=await r.json(),t="👁 "+d.visita+" visitas · 👩‍🏫 "+d.docente+" docentes participantes · 📄 "+d.pdf+" informes PDF";["cnt0","cnt1"].forEach(i=>{const e=$(i);if(e)e.textContent=t})}catch(x){}}
-try{if(!sessionStorage.getItem("m3v")){sessionStorage.setItem("m3v","1");Promise.resolve(cnt("visita")).then(loadCount)}else loadCount()}catch(x){Promise.resolve(cnt("visita")).then(loadCount)}
+let VISN=null;
+async function loadCount(){try{const r=await fetch("/api/visitas?public=1",{cache:"no-store"});if(!r.ok)return;const d=await r.json(),e=$("vis");if(e)e.innerHTML="👁 "+(VISN!=null?"Eres el visitante N.º <b>"+VISN+"</b>":"<b>"+d.visita+"</b> visitas")+"<small>👩‍🏫 "+d.docente+" docentes participantes · 📄 "+d.pdf+" informes PDF</small>"}catch(x){}}
+async function visita(){try{let n=null;try{n=sessionStorage.getItem("m3vn")}catch(x){}if(n)VISN=+n;else{const r=await cnt("visita");if(r&&r.ok){const j=await r.json();VISN=j.n;try{sessionStorage.setItem("m3vn",VISN)}catch(x){}}}}catch(x){}loadCount()}
+visita();
 const _ap=applyID;applyID=function(){_ap();Promise.resolve(cnt("ingreso")).then(loadCount)};
 const _dl=dl;dl=async function(n,d){const r=await _dl(n,d);if(/\.pdf$/i.test(n))Promise.resolve(cnt("pdf")).then(loadCount);return r};
 
@@ -483,6 +486,6 @@ const N=d.getNumberOfPages();for(let i=1;i<=N;i++){d.setPage(i);d.setFont("helve
 dl("PTAFI_Cronograma_Momento3.pdf",d.output("blob"));msg("PDF generado. Si no se descarga, revise los permisos del navegador.")}catch(x){msg("No fue posible generar el PDF en esta vista.")}}
 document.addEventListener("input",e=>{const k=e.target.dataset&&e.target.dataset.k;if(k){const i=e.target.closest("tr").rowIndex-1;R[i][k]=e.target.value;save()}else if(/^f[123]$/.test(e.target.id))save()});
 function show(id){if(id=="seg")seg();{const bb=document.querySelector('nav button[data-id="'+id+'"]'),gc=bb&&bb.closest(".gsub");if(gc&&gc.hidden){gc.hidden=false;gc.h.textContent="▾ "+gc.t}}document.querySelectorAll(".sec").forEach(s=>s.hidden=s.id!=id);document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.id==id));document.getElementById("nav").classList.remove("open");scrollTo(0,0)}
-let GC=null;S.forEach((s,i)=>{if(i==0||s.id=="fases"){const t=i==0?"SESIÓN 1 · MOMENTO III-2026":"SESIÓN 2",h=document.createElement("button"),c=document.createElement("div");c.className="gsub";c.hidden=i!=0;c.h=h;c.t=t;h.className="ng";h.textContent=(c.hidden?"▸ ":"▾ ")+t;h.onclick=()=>{c.hidden=!c.hidden;h.textContent=(c.hidden?"▸ ":"▾ ")+t};nav.appendChild(h);nav.appendChild(c);GC=c}const b=document.createElement("button");b.textContent=s.n;b.dataset.id=s.id;b.onclick=()=>show(s.id);GC.appendChild(b)});
+let GC=null;S.forEach((s,i)=>{if(i==0||s.id=="fases"){const t=i==0?"SESIÓN 1 · MOMENTO III-2026":"SESIÓN 2 · DESARROLLO DE LAS FASES",h=document.createElement("button"),c=document.createElement("div");c.className="gsub";c.hidden=i!=0;c.h=h;c.t=t;h.className="ng";h.textContent=(c.hidden?"▸ ":"▾ ")+t;h.onclick=()=>{c.hidden=!c.hidden;h.textContent=(c.hidden?"▸ ":"▾ ")+t};nav.appendChild(h);nav.appendChild(c);GC=c}const b=document.createElement("button");b.textContent=s.n;b.dataset.id=s.id;b.onclick=()=>show(s.id);GC.appendChild(b)});{const bv=document.createElement("div");bv.id="bv";bv.className="bv";nav.insertBefore(bv,nav.firstChild);const vs=document.createElement("div");vs.id="vis";vs.className="vis";nav.appendChild(vs)}
 draw();show("cuando");
 </script></body></html>

@@ -18,7 +18,9 @@ export default async (req) => {
     d.dias[k] = d.dias[k] || {};
     d.dias[k][e] = (d.dias[k][e] || 0) + 1;
     await store.setJSON("stats", d);
-    return new Response("ok");
+    return new Response(e === "visita" ? JSON.stringify({ n: d.total[e] }) : "ok", {
+      headers: { "content-type": "application/json", "cache-control": "no-store" },
+    });
   }
 
   if (req.method === "GET") {
